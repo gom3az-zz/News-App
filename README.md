@@ -4,6 +4,7 @@
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
 ### Prerequisites
+* mvp  pattern
 
 * [RxAndroid](https://github.com/ReactiveX/RxAndroid)
 * [recyclerview](https://developer.android.com/guide/topics/ui/layout/recyclerview)
