@@ -24,8 +24,8 @@ public class Presenter implements IContract.IActions, IContract.IActions.IData {
     }
 
     @Override
-    public void onLoadingError() {
-        mView.showError();
+    public void onLoadingError(Throwable e) {
+        mView.showError(e);
         mView.hideLoading();
     }
 

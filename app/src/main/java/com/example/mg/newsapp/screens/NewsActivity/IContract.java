@@ -13,7 +13,7 @@ public interface IContract {
 
         void hideLoading();
 
-        void showError();
+        void showError(Throwable e);
 
         void initWeatherData(List<HeadLinesModel.Articles> articles);
 
@@ -25,7 +25,7 @@ public interface IContract {
         void onArticleClick(String articleUrl);
 
         interface IData {
-            void onLoadingError();
+            void onLoadingError(Throwable e);
 
             void onLoadingSuccess(HeadLinesModel body);
 

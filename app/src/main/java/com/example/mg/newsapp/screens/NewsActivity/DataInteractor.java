@@ -28,7 +28,7 @@ class DataInteractor implements RetrofitInstance.IloadingData {
 
     @Override
     public void onError(Throwable e) {
-        iData.onLoadingError();
+        iData.onLoadingError(e);
     }
 
 

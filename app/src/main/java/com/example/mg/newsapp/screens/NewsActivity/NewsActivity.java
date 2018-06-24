@@ -56,8 +56,8 @@ public class NewsActivity extends AppCompatActivity implements IContract.IView,
     }
 
     @Override
-    public void showError() {
-        Toast.makeText(this, "Error Loading Data!", Toast.LENGTH_SHORT).show();
+    public void showError(Throwable e) {
+        Toast.makeText(this, "Error Loading Data!" + e.getMessage(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
