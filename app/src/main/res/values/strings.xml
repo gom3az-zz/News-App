@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">NewsApp</string>
+    <string name="hint_published_at">Published at</string>
+    <string name="hint_description">Description</string>
+    <string name="hint_author">Author</string>
+    <string name="desc_article_image">article image</string>
+</resources>
