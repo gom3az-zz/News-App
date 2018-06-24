@@ -12,6 +12,7 @@ These instructions will get you a copy of the project up and running on your loc
 * [butterknife](http://jakewharton.github.io/butterknife/)
 * [glide](https://github.com/bumptech/glide)
 * [retrofit](http://square.github.io/retrofit/)
+* [webview](https://developer.android.com/reference/android/webkit/WebView)
 
 ## Authors
 
