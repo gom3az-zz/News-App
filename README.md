@@ -7,6 +7,7 @@ These instructions will get you a copy of the project up and running on your loc
 * mvp  pattern
 
 * [RxAndroid](https://github.com/ReactiveX/RxAndroid)
+* [dagger](https://github.com/google/dagger)
 * [recyclerview](https://developer.android.com/guide/topics/ui/layout/recyclerview)
 * [cardview](https://developer.android.com/guide/topics/ui/layout/cardview)
 * [gson](https://github.com/google/gson)
