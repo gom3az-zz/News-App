@@ -1,4 +1,4 @@
-package com.example.mg.newsapp.model;
+package com.example.mg.newsapp.data.model;
 
 import java.util.List;
 

@@ -1,6 +1,5 @@
 package com.example.mg.newsapp.screens.webViewACtivity;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -13,7 +12,6 @@ import com.example.mg.newsapp.R;
 public class WebView extends AppCompatActivity {
     android.webkit.WebView webView;
 
-    @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,7 +21,6 @@ public class WebView extends AppCompatActivity {
         webView = findViewById(R.id.webview);
         final ProgressBar pbar = findViewById(R.id.pB1);
 
-        webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebChromeClient(new WebChromeClient() {
             @Override
             public void onProgressChanged(android.webkit.WebView view, int progress) {
@@ -31,7 +28,7 @@ public class WebView extends AppCompatActivity {
                     pbar.setVisibility(ProgressBar.VISIBLE);
                 }
                 pbar.setProgress(progress);
-                if (progress == 100) {
+                if (progress >= 80) {
                     pbar.setVisibility(ProgressBar.GONE);
                 }
             }
@@ -41,38 +38,23 @@ public class WebView extends AppCompatActivity {
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    public void onDetachedFromWindow() {
         destroyWebView();
+        super.onDetachedFromWindow();
     }
 
     public void destroyWebView() {
 
-        // Make sure you remove the WebView from its parent view before doing anything.
-
         webView.clearHistory();
-
-        // NOTE: clears RAM cache, if you pass true, it will also clear the disk cache.
-        // Probably not a great idea to pass true if you have other WebViews still alive.
         webView.clearCache(true);
-
-        // Loading a blank page is optional, but will ensure that the WebView isn't doing anything when you destroy it.
         webView.loadUrl("about:blank");
-
         webView.onPause();
         webView.removeAllViews();
         webView.destroyDrawingCache();
-
-        // NOTE: This pauses JavaScript execution for ALL WebViews,
-        // do not use if you have other WebViews still alive.
-        // If you create another WebView after calling this,
-        // make sure to call mWebView.resumeTimers().
+        webView.setWebViewClient(null);
         webView.pauseTimers();
-
-        // NOTE: This can occasionally cause a segfault below API 17 (4.2)
+        webView.setTag(null);
         webView.destroy();
-
-        // Null out the reference so that you don't end up re-using it.
         webView = null;
     }
 }

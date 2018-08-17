@@ -1,10 +1,8 @@
 package com.example.mg.newsapp.screens.NewsActivity;
 
-import com.example.mg.newsapp.model.HeadLinesModel;
+import com.example.mg.newsapp.data.model.HeadLinesModel;
 
 import java.util.List;
-
-import io.reactivex.disposables.Disposable;
 
 public interface IContract {
     interface IView {
@@ -17,21 +15,15 @@ public interface IContract {
 
         void initWeatherData(List<HeadLinesModel.Articles> articles);
 
-
     }
 
     interface IActions {
 
         void onArticleClick(String articleUrl);
 
-        interface IData {
-            void onLoadingError(Throwable e);
+        void onStart();
 
-            void onLoadingSuccess(HeadLinesModel body);
+        void onStop();
 
-            void onLoading(Disposable disposable);
-
-            void onDestroy();
-        }
     }
 }

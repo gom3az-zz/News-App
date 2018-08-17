@@ -25,7 +25,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/image_article"
             android:layout_marginBottom="4dp"
-            android:hint="@string/hint_author" />
+            android:hint="@string/hint_author"
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/text_description"
@@ -33,7 +34,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/text_auther"
             android:layout_marginBottom="4dp"
-            android:hint="@string/hint_description" />
+            android:hint="@string/hint_description"
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/text_published_at"
@@ -42,7 +44,9 @@
             android:layout_below="@id/text_description"
             android:layout_alignParentEnd="true"
             android:layout_marginBottom="4dp"
-            android:hint="@string/hint_published_at" />
+            android:hint="@string/hint_published_at"
+            android:textSize="10sp" />
+
     </RelativeLayout>
 
 </android.support.v7.widget.CardView>

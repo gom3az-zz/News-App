@@ -2,37 +2,37 @@ package com.example.mg.newsapp.screens.NewsActivity;
 
 import android.content.Intent;
 
-import com.example.mg.newsapp.model.HeadLinesModel;
+import com.example.mg.newsapp.data.DataInteractor;
 import com.example.mg.newsapp.screens.webViewACtivity.WebView;
 
-import io.reactivex.disposables.Disposable;
+import io.reactivex.disposables.CompositeDisposable;
 
-public class Presenter implements IContract.IActions, IContract.IActions.IData {
+public class Presenter implements IContract.IActions {
 
-    private NewsActivity mView;
-    private Disposable disposable;
+    private final NewsActivity mView;
+    private final DataInteractor mDataInteractor;
+    private CompositeDisposable mDisposable = new CompositeDisposable();
 
-    Presenter(NewsActivity newsActivity) {
+    public Presenter(NewsActivity newsActivity, DataInteractor dataInteractor) {
         mView = newsActivity;
-        new DataInteractor(this);
+        mDataInteractor = dataInteractor;
     }
 
     @Override
-    public void onLoading(Disposable d) {
-        disposable = d;
-        mView.showLoading();
+    public void onStart() {
+        mDisposable.add(mDataInteractor.loadOnlineWeather()
+                .doOnSubscribe(x -> mView.showLoading())
+                .doFinally(mView::hideLoading)
+                .subscribe(
+                        (headLinesModel) -> mView.initWeatherData(headLinesModel.getArticles()),
+                        mView::showError
+                )
+        );
     }
 
     @Override
-    public void onLoadingError(Throwable e) {
-        mView.showError(e);
-        mView.hideLoading();
-    }
-
-    @Override
-    public void onLoadingSuccess(HeadLinesModel body) {
-        mView.initWeatherData(body.getArticles());
-        mView.hideLoading();
+    public void onStop() {
+        mDisposable.clear();
     }
 
     @Override
@@ -42,9 +42,4 @@ public class Presenter implements IContract.IActions, IContract.IActions.IData {
         mView.startActivity(intent);
     }
 
-
-    @Override
-    public void onDestroy() {
-        disposable.dispose();
-    }
 }

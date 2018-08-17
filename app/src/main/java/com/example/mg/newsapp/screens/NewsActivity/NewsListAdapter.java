@@ -1,6 +1,5 @@
-package com.example.mg.newsapp;
+package com.example.mg.newsapp.screens.NewsActivity;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,24 +8,33 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
-import com.example.mg.newsapp.model.HeadLinesModel;
+import com.example.mg.newsapp.R;
+import com.example.mg.newsapp.data.model.HeadLinesModel;
+import com.example.mg.newsapp.screens.NewsActivity.DI.IActivityScope;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
+@IActivityScope
 public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHolder> {
 
 
-    private Context mContext;
     private List<HeadLinesModel.Articles> mArticles;
-    private IItemClickListener clickListener;
+    private final RequestManager mGlide;
+    private IItemClickListener mClickListener;
 
-    public NewsListAdapter(Context context, List<HeadLinesModel.Articles> articles) {
-        mContext = context;
-        mArticles = articles;
-        clickListener = (IItemClickListener) context;
+    @Inject
+    public NewsListAdapter(NewsActivity context, RequestManager glide) {
+        mClickListener = context;
+        mGlide = glide;
+    }
+
+    public void setData(List<HeadLinesModel.Articles> articles) {
+        this.mArticles = articles;
     }
 
     @NonNull
@@ -43,19 +51,13 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHo
         holder.description.setText(mArticles.get(position).getDescription());
         holder.publishedAt.setText(mArticles.get(position).getPublishedAt());
 
-        Glide.with(mContext)
-                .load(mArticles.get(position).getUrlToImage())
+        mGlide.load(mArticles.get(position).getUrlToImage())
                 .apply(new RequestOptions()
                         .placeholder(R.drawable.placeholder)
                         .diskCacheStrategy(DiskCacheStrategy.DATA))
                 .into(holder.articleImage);
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                clickListener.onItemClick(mArticles.get(holder.getAdapterPosition()).getUrl());
-            }
-        });
+        holder.itemView.setOnClickListener(v -> mClickListener.onItemClick(mArticles.get(holder.getAdapterPosition()).getUrl()));
 
     }
 
